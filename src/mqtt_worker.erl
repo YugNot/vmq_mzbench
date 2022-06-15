@@ -328,7 +328,7 @@ stats({publish_out, MsgId, QoS}, State)  ->
     maps:put({outgoing, MsgId}, os:timestamp(), State);
 stats({publish_in, MsgId, Payload, QoS}, State) ->
     T2 = os:timestamp(),
-    {T1, _OldPayload} = binary_to_term(Payload),
+    T1 = os:timestamp(),
     Diff = positive(timer:now_diff(T2, T1)),
     case QoS of
         0 -> mzb_metrics:notify({"mqtt.message.pub_to_sub.latency", histogram}, Diff);
